@@ -1,14 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { Header } from './shared/components/header/header';
 import { MainContent } from './shared/components/main-content/main-content';
+import { ModalControllerService } from './core/services/modal-controller.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, MainContent],
+  imports: [Header, MainContent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('rocket-go-task');
+  private readonly _modalControllerService = inject(ModalControllerService);
+
+  openModal() {
+    this._modalControllerService.openModal();
+  }
 }

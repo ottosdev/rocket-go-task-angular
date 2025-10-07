@@ -1,1 +1,32 @@
-<p>task-card works!</p>
+<div class="p-3 bg[#fafafa] rounded-xl cursor-grab flex flex-col gap-3">
+  <div class="flex gap-1">
+    <p class="font-bold" [title]="task.name">
+      {{ task.name.length < 10 ? task.name : (task.name | slice: 0 : 10) + '...' }}
+    </p>
+    <img
+      class="self-start cursor-pointer ml-auto"
+      src="images/icon-delete.svg"
+      alt="delete"
+      (click)="deleteTask()"
+    />
+  </div>
+  <p [title]="task.description" class="font-light text-sm">
+    {{
+      task.description.length < 10 ? task.description : (task.description | slice: 0 : 10) + '...'
+    }}
+  </p>
+  <div class="flex items-center gap-1">
+    <img src="images/icon-comments.svg" alt="comments" />
+    <p
+      (click)="openModalComments()"
+      class="text-xs font-semibold text-[#2a89ef] underline underline-offset-2 cursor-pointer"
+    >
+      {{ task.comments.length }} Comentarios
+    </p>
+    <p
+      class="text-xs font-semibold text-[#2a89ef] underline underline-offset-2 cursor-pointer ml-auto"
+    >
+      Editar
+    </p>
+  </div>
+</div>

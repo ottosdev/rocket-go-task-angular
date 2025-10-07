@@ -1,1 +1,66 @@
-<p>task-comments-modal works!</p>
+<div class="rounded-xl overflow-scroll bg-white max-h-[500] scrollbar-hidden">
+  <div class="flex gap-1 items-center p-4">
+    <img src="images/icon-task-star.svg" alt="Star" />
+    <h1 class="font-semibold text-lg">Comentar tarefa</h1>
+    <img
+      class="ml-auto cursor-pointer"
+      src="images/icon-close.svg"
+      alt="Fechar"
+      (click)="onCloseModal()"
+    />
+  </div>
+
+  <div class="p-4 border-t border-[#d1d5db]">
+    <h1 class="font-semibold text-lg mb-4">{{ _task.name }}</h1>
+    <p class="font-semibold text-sm mb-2">Descrição da tarefa</p>
+    <p class="text-base text-[#374151] font-normal">{{ _task.description }}</p>
+  </div>
+
+  <div class="p-4">
+    <div class="bg-[#f3f4f6] p-5 rounded-xl flex flex-col gap-5">
+      <div class="font-bold text-sm">
+        <p>Comentarios</p>
+      </div>
+      <form class="flex items-start gap-2" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col w-full">
+          <input
+            #descriptionInput
+            placeholder="Adicione um comentário"
+            class="rounded-lg border border-[#d1d5db] p-3 bg-light flex-1 text-sm font-light"
+            type="text"
+            formControlName="description"
+          />
+        </div>
+        <button
+          type="submit"
+          [disabled]="isFormInvalid"
+          class="{{
+            `rounded-lg text-sm font-semibold cursor-pointer px-4 py-3
+            ${isFormInvalid ? 'bg-[#d7d8d8]' : 'bg-[#2a89ef] text-white shadow-md shadow-blue-500/50  active:translate-y-1 transition-transform duration-75 '}`
+          }}"
+        >
+          Adicionar
+        </button>
+      </form>
+      <div class="flex flex-col gap-5 overflow-scroll max-h-44 scrollbar-hidden">
+        <!-- Comentario -->
+        @for (comment of _task.comments; track comment.id; let last = $last) {
+          <div class="{{ `flex flex-col gap-3 ${!last ? 'border-b border-[#d1d5db]' : ''}` }}">
+            <div>
+              <p class="font-light text-sm text-[#374151]">{{ comment.description }}</p>
+            </div>
+            <div class="{{ `flex gap-4  ${!last ? 'mb-3' : ''}` }}">
+              <p class="font-normal text-xs text-[#9ca3af]">Comentado há 10 min atrás</p>
+              <p
+                (click)="deleteComment(comment.id)"
+                class="font-semibold text-xs underline underline-offset-2 cursor-pointer"
+              >
+                Apagar
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

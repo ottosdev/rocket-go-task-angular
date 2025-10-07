@@ -1,1 +1,64 @@
-<p>task-form-modal works!</p>
+<form class="rounded-xl overflow-hidden bg-white" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <!-- Header -->
+  <div class="flex gap-1 items-center p-4">
+    <img src="images/icon-new-task.svg" alt="Nova Tarefa" />
+    <h1 class="font-semibold text-lg">{{ modeTitle }}</h1>
+    <img
+      class="ml-auto cursor-pointer"
+      src="images/icon-close.svg"
+      alt="Fechar"
+      (click)="closeModal()"
+    />
+  </div>
+  <!-- Content -->
+  <div class="p-4 border-y border-[#d1d5db] flex flex-col gap-4">
+    <div>
+      <p class="font-semibold text-sm mb-2">Nome</p>
+      <input
+        formControlName="name"
+        type="text"
+        placeholder="Descreva o que devera ser feito"
+        class="border border-[#d1d5db] rounded-lg text-sm font-light p-3 w-full text-[#89919f]"
+      />
+      @if (showErrorNameMessage) {
+        <p class="text-sm font-semibold text-red-500">
+          O campo é obrigatório e precisa ter no minímo 10 caracteres
+        </p>
+      }
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm mb-2">Descrição</p>
+      <input
+        formControlName="description"
+        type="text"
+        placeholder="Adicione uma descrição"
+        class="border border-[#d1d5db] rounded-lg text-sm font-light p-3 w-full text-[#89919f]"
+      />
+      @if (showErrorDescriptionMessage) {
+        <p class="text-sm font-semibold text-red-500">
+          O campo é obrigatório e precisa ter no minímo 10 caracteres
+        </p>
+      }
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="p-4 flex justify-end gap-2">
+    <button
+      (click)="closeModal()"
+      type="button"
+      class="bg-[#fafafa] rounded-lg text-sm font-semibold cursor-pointer px-4 py-3 active:translate-y-1 transition-transform duration-75"
+    >
+      Cancelar
+    </button>
+    <button
+      [disabled]="isInvalidForm"
+      type="submit"
+      class="{{
+        `bg-[#2a89ef] rounded-lg text-sm font-semibold text-white cursor-pointer px-4 py-3 ${isInvalidForm ? 'bg-[#d7d8d8]' : 'active:translate-y-1 transition-transform duration-75 shadow-md shadow-blue-500/50 '}`
+      }}"
+    >
+      {{ modeButtonTitle }}
+    </button>
+  </div>
+</form>
